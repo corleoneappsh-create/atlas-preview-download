@@ -1,0 +1,17 @@
+name: Package APK
+on:
+  workflow_dispatch:
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download signed preview APK
+        run: curl -fL 'https://github.com/corleoneappsh-create/atlas-preview-download/releases/download/v1.0.0-preview/Atlas-Preview-1.0.0.apk' -o Atlas-Preview-1.0.0.apk
+      - name: Verify SHA-256
+        run: echo 'be7bb3162d5a6f56c85b7a27a87bba09e88a3eaf06b7e2ec50f58288745f1ce2  Atlas-Preview-1.0.0.apk' | sha256sum -c -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Atlas-Preview-1.0.0
+          path: Atlas-Preview-1.0.0.apk
+          compression-level: 0
+          retention-days: 1
